@@ -1,7 +1,8 @@
 const cors = require('cors');
 const express = require('express');
+const bodyParser = require('body-parser');
 const sequelize = require('./database');
-
+require('dotenv').config();
 const app = express();
 
 sequelize.sync({ force: true }).then(async () => {
@@ -29,7 +30,12 @@ sequelize.sync({ force: true }).then(async () => {
   console.error('Unable to sync database:', err);
 });
 
+app.use(bodyParser.json());
 app.use(cors());
+app.use(express.json());
+
+const authRoutes = require('./routes/auth.routes');
+app.use('/api/auth', authRoutes);
 
 app.listen(process.env.REACT_APP_SERVER_PORT, () => {
   console.log(`App server now listening on port ${process.env.REACT_APP_SERVER_PORT}`);

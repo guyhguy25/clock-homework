@@ -41,9 +41,10 @@ CREATE TABLE `Users` (
 CREATE TABLE `TimesheetReports` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) NOT NULL,
-  `weekStartDate` date NOT NULL,
-  `hoursWorked` decimal(5,2) NOT NULL,
-  `status` enum('Draft','Submitted','Approved','Rejected') NOT NULL DEFAULT 'Draft',
+  `date` date NOT NULL,
+  `startTime` time NOT NULL,
+  `endTime` time NOT NULL,
+  `status` enum('Pending','Approved','Rejected') NOT NULL DEFAULT 'Pending',
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -66,15 +67,17 @@ INSERT INTO `Users` (`firstName`, `lastName`, `email`, `password`, `role`, `mana
 -- Dumping data for table `TimesheetReports`
 --
 
-INSERT INTO `TimesheetReports` (`userId`, `weekStartDate`, `hoursWorked`, `status`, `createdAt`, `updatedAt`) VALUES
-(3, '2024-03-18', 40.00, 'Approved', NOW(), NOW()),
-(3, '2024-03-25', 37.50, 'Submitted', NOW(), NOW()),
-(4, '2024-03-18', 35.00, 'Approved', NOW(), NOW()),
-(4, '2024-03-25', 40.00, 'Draft', NOW(), NOW()),
-(5, '2024-03-18', 40.00, 'Approved', NOW(), NOW()),
-(5, '2024-03-25', 40.00, 'Submitted', NOW(), NOW()),
-(6, '2024-03-18', 32.50, 'Approved', NOW(), NOW()),
-(6, '2024-03-25', 40.00, 'Draft', NOW(), NOW());
+INSERT INTO `TimesheetReports` (`userId`, `date`, `startTime`, `endTime`, `status`, `createdAt`, `updatedAt`) VALUES
+(3, '2024-03-18', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(3, '2024-03-19', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(3, '2024-03-20', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(3, '2024-03-21', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(3, '2024-03-22', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(4, '2024-03-18', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(4, '2024-03-19', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(4, '2024-03-20', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(4, '2024-03-21', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(4, '2024-03-22', '09:00:00', '17:00:00', 'Approved', NOW(), NOW());
 
 --
 -- Constraints for dumped tables
