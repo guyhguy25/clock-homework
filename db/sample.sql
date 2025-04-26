@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.9.0.1
--- https://www.phpmyadmin.net/
---
--- Host: mysql
--- Generation Time: Jun 27, 2019 at 01:14 AM
--- Server version: 5.7.26
--- PHP Version: 7.2.19
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -19,49 +10,82 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sampledb`
+-- Database: `mdclone`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sample`
+-- Table structure for table `Users`
 --
 
-CREATE TABLE `sample` (
-  `id` int(255) NOT NULL,
-  `name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `Users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `firstName` varchar(255) NOT NULL,
+  `lastName` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` enum('Employee','Manager') NOT NULL,
+  `managerId` int(11) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  KEY `managerId` (`managerId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `sample`
+-- Table structure for table `TimesheetReports`
 --
 
-INSERT INTO `sample` (`id`, `name`) VALUES
-(1, 'andrew'),
-(2, 'brian'),
-(3, 'charles'),
-(4, 'david');
+CREATE TABLE `TimesheetReports` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL,
+  `weekStartDate` date NOT NULL,
+  `hoursWorked` decimal(5,2) NOT NULL,
+  `status` enum('Draft','Submitted','Approved','Rejected') NOT NULL DEFAULT 'Draft',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Indexes for dumped tables
+-- Dumping data for table `Users`
 --
 
---
--- Indexes for table `sample`
---
-ALTER TABLE `sample`
-  ADD PRIMARY KEY (`id`);
+INSERT INTO `Users` (`firstName`, `lastName`, `email`, `password`, `role`, `managerId`, `createdAt`, `updatedAt`) VALUES
+('John', 'Smith', 'john.smith@company.com', '$2a$10$hashedpassword1', 'Manager', NULL, NOW(), NOW()),
+('Sarah', 'Johnson', 'sarah.johnson@company.com', '$2a$10$hashedpassword2', 'Manager', NULL, NOW(), NOW()),
+('Michael', 'Williams', 'michael.williams@company.com', '$2a$10$hashedpassword3', 'Employee', 1, NOW(), NOW()),
+('Emily', 'Brown', 'emily.brown@company.com', '$2a$10$hashedpassword4', 'Employee', 1, NOW(), NOW()),
+('David', 'Jones', 'david.jones@company.com', '$2a$10$hashedpassword5', 'Employee', 2, NOW(), NOW()),
+('Jessica', 'Garcia', 'jessica.garcia@company.com', '$2a$10$hashedpassword6', 'Employee', 2, NOW(), NOW());
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Dumping data for table `TimesheetReports`
 --
 
+INSERT INTO `TimesheetReports` (`userId`, `weekStartDate`, `hoursWorked`, `status`, `createdAt`, `updatedAt`) VALUES
+(3, '2024-03-18', 40.00, 'Approved', NOW(), NOW()),
+(3, '2024-03-25', 37.50, 'Submitted', NOW(), NOW()),
+(4, '2024-03-18', 35.00, 'Approved', NOW(), NOW()),
+(4, '2024-03-25', 40.00, 'Draft', NOW(), NOW()),
+(5, '2024-03-18', 40.00, 'Approved', NOW(), NOW()),
+(5, '2024-03-25', 40.00, 'Submitted', NOW(), NOW()),
+(6, '2024-03-18', 32.50, 'Approved', NOW(), NOW()),
+(6, '2024-03-25', 40.00, 'Draft', NOW(), NOW());
+
 --
--- AUTO_INCREMENT for table `sample`
+-- Constraints for dumped tables
 --
-ALTER TABLE `sample`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+ALTER TABLE `Users`
+  ADD CONSTRAINT `Users_ibfk_1` FOREIGN KEY (`managerId`) REFERENCES `Users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+ALTER TABLE `TimesheetReports`
+  ADD CONSTRAINT `TimesheetReports_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -6,7 +6,6 @@ const app = express();
 
 sequelize.sync({ force: true }).then(async () => {
   console.log("Database synced!");
-
   // Create a new user
   // const newUser = await User.create({
   //     firstName: 'John',
