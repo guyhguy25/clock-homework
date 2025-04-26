@@ -56,12 +56,12 @@ CREATE TABLE `TimesheetReports` (
 --
 
 INSERT INTO `Users` (`firstName`, `lastName`, `email`, `password`, `role`, `managerId`, `createdAt`, `updatedAt`) VALUES
-('John', 'Smith', 'john.smith@company.com', '$2a$10$hashedpassword1', 'Manager', NULL, NOW(), NOW()),
-('Sarah', 'Johnson', 'sarah.johnson@company.com', '$2a$10$hashedpassword2', 'Manager', NULL, NOW(), NOW()),
-('Michael', 'Williams', 'michael.williams@company.com', '$2a$10$hashedpassword3', 'Employee', 1, NOW(), NOW()),
-('Emily', 'Brown', 'emily.brown@company.com', '$2a$10$hashedpassword4', 'Employee', 1, NOW(), NOW()),
-('David', 'Jones', 'david.jones@company.com', '$2a$10$hashedpassword5', 'Employee', 2, NOW(), NOW()),
-('Jessica', 'Garcia', 'jessica.garcia@company.com', '$2a$10$hashedpassword6', 'Employee', 2, NOW(), NOW());
+('John', 'Smith', 'john.smith@mdclone.com', '$2a$12$2QhNE5pzGlRfuFAt2cAaQu4FahjOQQe6mJekpzLYmsPlY4BqbWGNO', 'Manager', NULL, NOW(), NOW()),
+('Sarah', 'Johnson', 'sarah.johnson@mdclone.com', '$2a$12$2QhNE5pzGlRfuFAt2cAaQu4FahjOQQe6mJekpzLYmsPlY4BqbWGNO', 'Manager', NULL, NOW(), NOW()),
+('Michael', 'Williams', 'michael.williams@mdclone.com', '$2a$12$2QhNE5pzGlRfuFAt2cAaQu4FahjOQQe6mJekpzLYmsPlY4BqbWGNO', 'Employee', 1, NOW(), NOW()),
+('Emily', 'Brown', 'emily.brown@mdclone.com', '$2a$12$2QhNE5pzGlRfuFAt2cAaQu4FahjOQQe6mJekpzLYmsPlY4BqbWGNO', 'Employee', 1, NOW(), NOW()),
+('David', 'Jones', 'david.jones@mdclone.com', '$2a$12$2QhNE5pzGlRfuFAt2cAaQu4FahjOQQe6mJekpzLYmsPlY4BqbWGNO', 'Employee', 2, NOW(), NOW()),
+('Jessica', 'Garcia', 'jessica.garcia@mdclone.com', '$2a$12$2QhNE5pzGlRfuFAt2cAaQu4FahjOQQe6mJekpzLYmsPlY4BqbWGNO', 'Employee', 2, NOW(), NOW());
 
 --
 -- Dumping data for table `TimesheetReports`
