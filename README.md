@@ -12,3 +12,6 @@
 
   ## web
     http://localhost:3000
+
+  ## server
+    all init sql user's password is 123456
