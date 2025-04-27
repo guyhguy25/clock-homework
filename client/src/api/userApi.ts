@@ -36,7 +36,6 @@ interface AllManagersResponse {
 	managers: Manager[];
 }
 
-// Login User
 export const useLogin = (): UseMutationResult<
 	LoginResponse,
 	Error,
@@ -47,7 +46,6 @@ export const useLogin = (): UseMutationResult<
 	});
 };
 
-// Register User
 export const useRegister = (): UseMutationResult<
 	RegisterResponse,
 	Error,
@@ -59,7 +57,6 @@ export const useRegister = (): UseMutationResult<
 	});
 };
 
-// Fetch Profile
 export const useProfile = () => {
 	return useQuery({
 		queryKey: ["profile"],
@@ -67,7 +64,6 @@ export const useProfile = () => {
 	});
 };
 
-// Fetch Managers
 export const useManagers = (): UseQueryResult<AllManagersResponse, Error> => {
 	return useQuery({
 		queryKey: ["managers"],
@@ -75,7 +71,6 @@ export const useManagers = (): UseQueryResult<AllManagersResponse, Error> => {
 	});
 };
 
-// Fetch Employees (for Manager)
 export const useMyEmployees = () => {
 	return useQuery({
 		queryKey: ["myEmployees"],
