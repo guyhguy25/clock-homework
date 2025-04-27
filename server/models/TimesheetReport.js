@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
     },
     endTime: {
       type: DataTypes.TIME,
-      allowNull: false,
+      allowNull: true,
     },
     status: {
       type: DataTypes.ENUM('Pending', 'Approved', 'Rejected'),

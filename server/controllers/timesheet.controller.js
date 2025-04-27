@@ -15,9 +15,8 @@ const clockIn = async (req, res) => {
       return res.status(400).json({ message: 'startTime is required' });
     }
 
-    const userId = req.user.userId; // Coming from token (after middleware)
+    const userId = req.user.userId;
 
-    // Check if already clocked in today
     const existing = await TimesheetReport.findOne({
       where: { userId, date },
     });
@@ -56,7 +55,7 @@ const clockOut = async (req, res) => {
       return res.status(400).json({ message: 'endTime is required' });
     }
 
-    const userId = req.user.userId; // From token (after middleware)
+    const userId = req.user.userId;
 
     const report = await TimesheetReport.findOne({
       where: { userId, date },
@@ -99,7 +98,7 @@ const viewMyReports = async (req, res) => {
 const approveReport = async (req, res) => {
   try {
     const { reportId } = req.params;
-    const { status } = req.body; // 'Approved' or 'Rejected'
+    const { status } = req.body;
     const role = req.user.role;
 
     if (role !== 'Manager') {
@@ -138,7 +137,7 @@ const viewEmployeesReports = async (req, res) => {
       include: {
         model: require('../models').User,
         as: 'employee',
-        where: { managerId }, // Only subordinates of this manager
+        where: { managerId },
         attributes: ['id', 'firstName', 'lastName', 'email'],
       },
       order: [['date', 'DESC']],

@@ -14,7 +14,6 @@ const sequelize = new Sequelize(
 const User = require('./User')(sequelize);
 const TimesheetReport = require('./TimesheetReport')(sequelize);
 
-// Define associations
 User.associate({ User, TimesheetReport });
 TimesheetReport.associate({ User });
 
