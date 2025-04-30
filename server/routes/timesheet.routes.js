@@ -6,9 +6,10 @@ const authMiddleware = require('../middlewares/auth.middleware')
 router.post('/clock-in', authMiddleware, timesheetController.clockIn);
 router.post('/clock-out', authMiddleware, timesheetController.clockOut);
 router.get('/my-reports', authMiddleware, timesheetController.viewMyReports);
+router.delete('/:reportId', authMiddleware, timesheetController.removeReport);
 
 // Manager
-router.patch('/approve/:reportId', authMiddleware, timesheetController.approveReport);
+router.patch('/review/:reportId', authMiddleware, timesheetController.reportReview);
 router.get('/employees-reports', authMiddleware, timesheetController.viewEmployeesReports);
 
 // Test

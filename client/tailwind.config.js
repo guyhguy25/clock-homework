@@ -4,9 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#0078D4',   // Hilanet blue
-        secondary: '#F3F6F9', // Light gray background
-        darkText: '#333333',  // Dark text
+        primary: '#6C2EB7',
+        secondary: '#F3F6F9',
+        darkText: '#231F20',
       },
       borderRadius: {
         lg: '12px',

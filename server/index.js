@@ -19,7 +19,6 @@ const authRoutes = require('./routes/auth.routes');
 const timesheetRoutes = require('./routes/timesheet.routes');
 const userRoutes = require('./routes/user.routes');
 
-
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/reports', timesheetRoutes);

@@ -36,10 +36,11 @@ interface ClockOutRequest {
 }
 
 interface Report {
+	id: string;
 	date: string;
 	startTime: string;
 	endTime: string | null;
-	status: "Pending" | "Completed";
+	status: "Pending" | "Approved" | "Rejected";
 }
 
 interface ReportResponse {
@@ -94,5 +95,37 @@ export const useMyReports = (): UseQueryResult<Report[]> => {
 		queryKey: ["reports"],
 		queryFn: () =>
 			API.get("/reports/my-reports").then((res) => res.data.reports),
+	});
+};
+
+export const useRemoveReport = (): UseMutationResult<void, Error, string> => {
+	return useMutation({
+		mutationFn: (reportId: string) =>
+			API.delete(`/reports/${reportId}`).then((res) => res.data),
+	});
+};
+
+export const useMyEmployeesReport = () => {
+	return useQuery({
+		queryKey: ["employees-reports"],
+		queryFn: () =>
+			API.get("/reports/employees-reports").then(
+				(res) => res.data.employees
+			),
+	});
+};
+
+export const useReviewReport = () => {
+	return useMutation({
+		mutationFn: ({
+			reportId,
+			status,
+		}: {
+			reportId: number;
+			status: string;
+		}) =>
+			API.patch(`/reports/review/${reportId}`, { status }).then(
+				(res) => res.data
+			),
 	});
 };

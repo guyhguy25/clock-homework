@@ -4,6 +4,9 @@ const userController = require('../controllers/user.controller');
 const authMiddleware = require('../middlewares/auth.middleware')
 
 router.get('/managers', userController.getAllManagers);
+
+// Authenticated
+router.get('/profile', authMiddleware, userController.profile);
 router.put('/edit-profile', authMiddleware, userController.editProfile);
 router.put('/change-manager', authMiddleware, userController.changeManager);
 router.get('/my-employees', authMiddleware, userController.getMyEmployees);

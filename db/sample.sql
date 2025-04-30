@@ -56,28 +56,37 @@ CREATE TABLE `TimesheetReports` (
 --
 
 INSERT INTO `Users` (`firstName`, `lastName`, `email`, `password`, `role`, `managerId`, `createdAt`, `updatedAt`) VALUES
-('John', 'Smith', 'john.smith@mdclone.com', '$2a$12$2QhNE5pzGlRfuFAt2cAaQu4FahjOQQe6mJekpzLYmsPlY4BqbWGNO', 'Manager', NULL, NOW(), NOW()),
-('Sarah', 'Johnson', 'sarah.johnson@mdclone.com', '$2a$12$2QhNE5pzGlRfuFAt2cAaQu4FahjOQQe6mJekpzLYmsPlY4BqbWGNO', 'Manager', NULL, NOW(), NOW()),
-('Michael', 'Williams', 'michael.williams@mdclone.com', '$2a$12$2QhNE5pzGlRfuFAt2cAaQu4FahjOQQe6mJekpzLYmsPlY4BqbWGNO', 'Employee', 1, NOW(), NOW()),
-('Emily', 'Brown', 'emily.brown@mdclone.com', '$2a$12$2QhNE5pzGlRfuFAt2cAaQu4FahjOQQe6mJekpzLYmsPlY4BqbWGNO', 'Employee', 1, NOW(), NOW()),
-('David', 'Jones', 'david.jones@mdclone.com', '$2a$12$2QhNE5pzGlRfuFAt2cAaQu4FahjOQQe6mJekpzLYmsPlY4BqbWGNO', 'Employee', 2, NOW(), NOW()),
-('Jessica', 'Garcia', 'jessica.garcia@mdclone.com', '$2a$12$2QhNE5pzGlRfuFAt2cAaQu4FahjOQQe6mJekpzLYmsPlY4BqbWGNO', 'Employee', 2, NOW(), NOW());
+('Admin', 'Admin', 'admin@mdclone.com', '$2a$12$2QhNE5pzGlRfuFAt2cAaQu4FahjOQQe6mJekpzLYmsPlY4BqbWGNO', 'Manager', NULL, NOW(), NOW()),
+('Oren', 'Dvash', 'orendvash@mdclone.com', '$2a$12$2QhNE5pzGlRfuFAt2cAaQu4FahjOQQe6mJekpzLYmsPlY4BqbWGNO', 'Manager', 1, NOW(), NOW()),
+('Guy', 'Haguy', 'guyhguy@mdclone.com', '$2a$12$2QhNE5pzGlRfuFAt2cAaQu4FahjOQQe6mJekpzLYmsPlY4BqbWGNO', 'Employee', 2, NOW(), NOW());
 
 --
 -- Dumping data for table `TimesheetReports`
 --
 
 INSERT INTO `TimesheetReports` (`userId`, `date`, `startTime`, `endTime`, `status`, `createdAt`, `updatedAt`) VALUES
-(3, '2024-03-18', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
-(3, '2024-03-19', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
-(3, '2024-03-20', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
-(3, '2024-03-21', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
-(3, '2024-03-22', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
-(4, '2024-03-18', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
-(4, '2024-03-19', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
-(4, '2024-03-20', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
-(4, '2024-03-21', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
-(4, '2024-03-22', '09:00:00', '17:00:00', 'Approved', NOW(), NOW());
+(2, '2024-04-01', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(2, '2024-04-02', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(2, '2024-04-03', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(2, '2024-04-08', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(2, '2024-04-09', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(2, '2024-04-10', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(2, '2024-04-15', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(2, '2024-04-22', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(2, '2024-04-23', '09:00:00', '17:00:00', 'Pending', NOW(), NOW()),
+(2, '2024-04-24', '09:00:00', '17:00:00', 'Pending', NOW(), NOW()),
+(3, '2024-04-01', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(3, '2024-04-02', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(3, '2024-04-03', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(3, '2024-04-08', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(3, '2024-04-09', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(3, '2024-04-10', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(3, '2024-04-15', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(3, '2024-04-16', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(3, '2024-04-19', '09:00:00', '17:00:00', 'Rejected', NOW(), NOW()),
+(3, '2024-04-22', '09:00:00', '17:00:00', 'Approved', NOW(), NOW()),
+(3, '2024-04-23', '09:00:00', '17:00:00', 'Pending', NOW(), NOW()),
+(3, '2024-04-24', '09:00:00', '17:00:00', 'Pending', NOW(), NOW());
 
 --
 -- Constraints for dumped tables

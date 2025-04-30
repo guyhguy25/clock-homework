@@ -1,40 +1,43 @@
 import { useState } from "react";
-import { DateCalendar, TimePicker, LocalizationProvider, TimeField } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-} from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import MyReports from "../components/MyReports";
-import { useClockIn, useClockOut } from "../api/timesheetApi";
+import Calendar from "../components/Calendar";
+import TimeDialog from "../components/TimeDialog";
+import { useClockIn, useClockOut, useMyReports } from "../api/timesheetApi";
 
 const Dashboard = () => {
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
   const [startTime, setStartTime] = useState<Dayjs | null>(null);
   const [endTime, setEndTime] = useState<Dayjs | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
+  const [existingReport, setExistingReport] = useState<any>(null);
   const queryClient = useQueryClient();
   const clockInMutation = useClockIn();
   const clockOutMutation = useClockOut();
+  const { data: reports = [] } = useMyReports();
 
   const handleDateSelect = (newDate: Dayjs | null) => {
     if (newDate) {
       setSelectedDate(newDate);
-      setStartTime(null);
-      setEndTime(null);
+      const dateStr = newDate.format("YYYY-MM-DD");
+      const existing = reports.find(r => r.date === dateStr);
+      setExistingReport(existing);
+
+      if (existing) {
+        setStartTime(dayjs(existing.startTime, "HH:mm"));
+        setEndTime(existing.endTime ? dayjs(existing.endTime, "HH:mm") : null);
+      } else {
+        setStartTime(null);
+        setEndTime(null);
+      }
       setOpenDialog(true);
     }
   };
 
   const handleSave = () => {
     if (selectedDate && startTime) {
-      const date = selectedDate.format("DD/MM/YYYY");
+      const date = selectedDate.format("YYYY-MM-DD");
       const start = startTime.format("HH:mm");
 
       if (endTime) {
@@ -46,7 +49,7 @@ const Dashboard = () => {
             },
           }
         );
-      } else {
+      } else if (!existingReport) {
         clockInMutation.mutate(
           { date, startTime: start },
           {
@@ -61,40 +64,36 @@ const Dashboard = () => {
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div className="flex flex-col items-center mt-10 gap-8">
-        <DateCalendar value={selectedDate} onChange={handleDateSelect} />
-        <MyReports />
+    <div className="flex flex-col items-center mt-10 gap-8 relative min-h-screen">
+      {/* Banner Image */}
+      <div className="mb-8">
+        <img
+          src="/BannerMdclone.png"
+          alt="Banner"
+          className="h-16 w-auto"
+        />
       </div>
 
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle>Select Times</DialogTitle>
-        <DialogContent className="flex flex-col gap-4 mt-2 !pt-2">
-          <TimeField
-            label="Start Time"
-            value={startTime}
-            onChange={(newValue) => setStartTime(newValue)}
-            format="HH:mm"
-          />
-          <TimeField
-            label="End Time"
-            value={endTime}
-            onChange={(newValue) => setEndTime(newValue)}
-            format="HH:mm"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenDialog(false)}>Cancel</Button>
-          <Button
-            onClick={handleSave}
-            disabled={!startTime}
-            variant="contained"
-          >
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </LocalizationProvider>
+      <Calendar
+        selectedDate={selectedDate}
+        onDateSelect={handleDateSelect}
+        reports={reports}
+      />
+
+      <MyReports />
+
+      <TimeDialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        onSave={handleSave}
+        startTime={startTime}
+        endTime={endTime}
+        onStartTimeChange={setStartTime}
+        onEndTimeChange={setEndTime}
+        existingReport={existingReport}
+        isSaveDisabled={!startTime || (!!existingReport && !endTime)}
+      />
+    </div>
   );
 };
 

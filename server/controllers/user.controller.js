@@ -14,6 +14,25 @@ const getAllManagers = async (req, res) => {
   }
 };
 
+const profile = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const user = await User.findByPk(userId, {
+      attributes: ['id', 'firstName', 'lastName', 'email', 'role'],
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 const editProfile = async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -85,7 +104,7 @@ const getMyEmployees = async (req, res) => {
 
     const employees = await User.findAll({
       where: { managerId: userId },
-      attributes: ['id', 'firstName', 'lastName', 'email'],
+      attributes: ['id', 'firstName', 'lastName', 'email', 'role'],
     });
 
     res.json({ employees });
@@ -98,6 +117,7 @@ const getMyEmployees = async (req, res) => {
 
 module.exports = {
   getAllManagers,
+  profile,
   editProfile,
   changeManager,
   getMyEmployees

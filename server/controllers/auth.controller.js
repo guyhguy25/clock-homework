@@ -65,10 +65,16 @@ const register = async (req, res) => {
       managerId: managerId || null,
     });
 
+    const token = jwt.sign(
+      { userId: user.id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
+
     const userResponse = { ...user.toJSON() };
     delete userResponse.password;
 
-    res.status(201).json({ message: 'User registered successfully', user: userResponse });
+    res.status(201).json({ message: 'User registered successfully', token, user: userResponse });
   } catch (error) {
     console.error('Registration error:', error);
     res.status(500).json({ message: 'Server error' });

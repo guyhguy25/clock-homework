@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useLogin } from '../api/userApi';
 
 const Login = () => {
@@ -27,7 +27,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-secondary">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-6 text-center text-darkText">Welcome Back</h2>
+        <h2 className="text-2xl font-semibold mb-6 text-center text-darkText">Welcome to Timesheet</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"
@@ -55,6 +55,14 @@ const Login = () => {
             {loginMutation.isPending ? 'Logging in...' : 'Login'}
           </button>
         </form>
+        <div className="mt-4 text-center">
+          <p className="text-gray-600">
+            Not already a user?{' '}
+            <Link to="/register" className="text-primary hover:underline">
+              Register here
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

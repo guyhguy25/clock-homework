@@ -1,4 +1,4 @@
-const { TimesheetReport } = require('../models');
+const { TimesheetReport, User } = require('../models');
 
 const clockIn = async (req, res) => {
   try {
@@ -95,7 +95,7 @@ const viewMyReports = async (req, res) => {
   }
 };
 
-const approveReport = async (req, res) => {
+const reportReview = async (req, res) => {
   try {
     const { reportId } = req.params;
     const { status } = req.body;
@@ -150,6 +150,38 @@ const viewEmployeesReports = async (req, res) => {
   }
 };
 
+const removeReport = async (req, res) => {
+  try {
+    const { reportId } = req.params;
+    const { userId, role } = req.user;
+
+    const report = await TimesheetReport.findByPk(reportId);
+
+    if (!report) {
+      return res.status(404).json({ message: 'Report not found' });
+    }
+
+    // Check if user is the owner of the report or a manager
+    if (report.userId !== userId && role !== 'Manager') {
+      return res.status(403).json({ message: 'Not authorized to delete this report' });
+    }
+
+    // If user is a manager, check if they manage the employee
+    if (role === 'Manager') {
+      const employee = await User.findByPk(report.userId);
+      if (employee.managerId !== userId) {
+        return res.status(403).json({ message: 'Not authorized to delete this report' });
+      }
+    }
+
+    await report.destroy();
+    res.json({ message: 'Report deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 const test = async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -165,6 +197,7 @@ module.exports = {
   clockOut,
   test,
   viewMyReports,
-  approveReport,
+  reportReview,
   viewEmployeesReports,
+  removeReport,
 };
